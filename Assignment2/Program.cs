@@ -1,4 +1,4 @@
-﻿foreach(var w in Queries.LinqUniqueHarry())
+﻿foreach(var w in Queries.ExtensionsCreatorWizardReverseOrder())
 {
     Console.WriteLine(w);
 }

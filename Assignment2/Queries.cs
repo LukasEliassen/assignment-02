@@ -29,9 +29,9 @@ public class Queries
 
     public static IEnumerable<(string,int?)> LinqUniqueHarry()
     {
-        var list = from w in wizards where w.Medium.Equals("Harry Potter") group w.Year by w.Name into g select g;
-        foreach(var tuple in list){
-            yield return new Tuple<string,int>(tuple);
+        var list = from w in wizards where w.Medium.Equals("Harry Potter") group w by w.Name;
+        foreach(var group in list){
+            yield return (group.ElementAt(0).Name,group.ElementAt(0).Year);
         }
     }
 
@@ -39,9 +39,24 @@ public class Queries
     {
         return wizards.Where(x => x.Medium == "Harry Potter").Select(x => (x.Name,x.Year)).Distinct();
     }
-/*
+
     public static IEnumerable<(string,string)> LinqCreatorWizardReverseOrder()
     {
-        //return from w in wizards orderby w.Creator descending group w.Name by w.Creator into g select (g.Key);
-    }*/
+        var list = from w in wizards orderby w.Creator descending, w.Name group w by w.Creator;
+        foreach(var group in list){
+            foreach(var wizard in group){
+                yield return (wizard.Creator,wizard.Name);
+            }
+        }
+    }
+
+    public static IEnumerable<(string,string)> ExtensionsCreatorWizardReverseOrder()
+    {
+        var list = wizards.OrderByDescending(x => x.Creator).ThenBy(x => x.Name).GroupBy(x => x.Creator);
+        foreach(var group in list){
+            foreach(var wizard in group){
+                yield return (wizard.Creator,wizard.Name);
+            }
+        }
+    }
 }
