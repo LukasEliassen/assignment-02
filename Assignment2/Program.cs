@@ -1,4 +1,4 @@
-﻿foreach (var wizard in WizardCollection.Create())
+﻿foreach(var w in Queries.LinqUniqueHarry())
 {
-    Console.WriteLine(wizard);
+    Console.WriteLine(w);
 }
